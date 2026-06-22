@@ -17,6 +17,23 @@ Not just rules. A methodology for appropriate reasoning.
 
 ---
 
+## System Architecture
+
+<div align="center">
+
+### Evidence Hierarchy
+![Evidence Hierarchy](docs/images/diagram3_evidence_hierarchy.png)
+
+### Decision Cost Filter (C0-C4)
+![Decision Cost Filter](docs/images/diagram4_decision_cost_filter.png)
+
+### Constitution Structure
+![Constitution Structure](docs/images/diagram5_constitution_structure.png)
+
+</div>
+
+---
+
 ## Quick Start
 
 ### Option 1: Copy Files
@@ -87,35 +104,128 @@ your-project/
 
 ### 1. Problem Classification
 Automatic detection of problem type:
-- Architecture → OIR
-- Debugging → Evidence Ladder
-- Configuration → Observe→Change→Verify
-- Research → Evidence Collection
+
+```mermaid
+graph TD
+    A[Problem Appears] --> B{Classify Type}
+    B -->|Structure/Trade-offs| C[Architecture]
+    B -->|Errors/Failures| D[Debugging]
+    B -->|Config/Settings| E[Configuration]
+    B -->|Understanding| F[Research]
+    
+    C --> G[Apply OIR Framework]
+    D --> H[Apply Evidence Ladder]
+    E --> I[Observe → Change → Verify]
+    F --> J[Evidence Collection]
+    
+    G --> K[Use Templates]
+    H --> K
+    I --> K
+    J --> K
+    
+    K --> L[Track Calibration]
+    L --> M[Success!]
+```
 
 ### 2. Decision Cost Filter
 Prevents over-analysis:
-- **C0 (Trivial)**: No deep reasoning (config flags, formatting)
-- **C1 (Tactical)**: Light OIR (single module changes)
-- **C2 (Architectural)**: Full OIR (structure changes)
-- **C3-C4**: Strict governance + rollback plans
+
+```mermaid
+graph LR
+    A[Decision Needed] --> B{Cost Level?}
+    B -->|C0 Trivial| C[5 min max<br/>No governance]
+    B -->|C1 Tactical| D[30 min max<br/>Light OIR]
+    B -->|C2 Architectural| E[Full OIR<br/>+ Templates]
+    B -->|C3-C4 Critical| F[Strict Governance<br/>+ Rollback Plan]
+    
+    C --> G[Observe → Change → Verify]
+    D --> H[Quick Analysis]
+    E --> I[Full Documentation]
+    F --> J[Formal Process]
+```
+
+**Visualization**:
+
+![Decision Cost Filter](docs/images/diagram4_decision_cost_filter.png)
 
 ### 3. Evidence Ladder
 Debugging methodology prioritizing evidence:
-- **P0**: Stack trace (★★★★★)
-- **P1**: Failing line (★★★★☆)
-- **P2**: Variable state (★★★☆☆)
-- **P4**: Root cause theory (★☆☆☆☆)
+
+```mermaid
+graph TD
+    A[Debugging Problem] --> B[Get Stack Trace]
+    B --> C{P0: Stack Trace ★★★★★}
+    C -->|Found| D[Find Failing Line]
+    C -->|Missing| B
+    
+    D --> E{P1: Failing Line ★★★★☆}
+    E -->|Found| F[Check Variable State]
+    E -->|Unclear| D
+    
+    F --> G{P2: State ★★★☆☆}
+    G -->|Observed| H[Form Hypothesis]
+    G -->|Gap| F
+    
+    H --> I{P4: Theory ★☆☆☆☆}
+    I -->|Evidence ≤ P2| J[ROOT CAUSE Confirmed]
+    I -->|Evidence > P2| K[Get More Evidence]
+    
+    K --> B
+    
+    J --> L[Fix!]
+```
+
+**Visualization**:
+
+![Evidence Hierarchy](docs/images/diagram3_evidence_hierarchy.png)
 
 **Key invariant**: No "ROOT CAUSE" until P0-P2 obtained.
 
 ### 4. Calibration Tracking
 Measure reasoning quality:
+
+```mermaid
+graph LR
+    A[Make Claim] --> B[Track in Ledger]
+    B --> C[Wait for Outcome]
+    C --> D{Was Claim Correct?}
+    D -->|Yes| E[Mark Accurate]
+    D -->|No| F[Mark Inaccurate]
+    E --> G[Calculate Accuracy %]
+    F --> G
+    G --> H{Accuracy > 90%?}
+    H -->|Yes| I[Confidence Calibration Good]
+    H -->|No| J[Adjust Confidence Levels]
+```
+
 - Target: >90% accuracy on claims
 - Track overconfidence, premature declarations
 - Weekly review and adjustment
 
 ### 5. Drift Detection
 Automated detection of methodology misuse:
+
+```mermaid
+graph TD
+    A[Problem Analysis] --> B{Problem Type?}
+    B -->|Architecture| C[Use OIR]
+    B -->|Debugging| D[Use Evidence Ladder] 
+    B -->|Config| E[Use Quick Process]
+    
+    C --> F{Using Correct Method?}
+    D --> F
+    E --> F
+    
+    F -->|Yes| G[✓ Success]
+    F -->|No| H[⚠ Drift Detected]
+    
+    H --> I[Log Drift]
+    I --> J[Suggest Correction]
+    J --> K[Apply Correct Method]
+    K --> G
+```
+
+Drift patterns:
 - Using OIR for debugging (wrong track)
 - Using Evidence Ladder for architecture (wrong track)
 - Over-analysis for config changes (wasted time)
