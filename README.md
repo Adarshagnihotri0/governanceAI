@@ -65,11 +65,32 @@ git subtree pull --prefix=.github https://github.com/YOUR_USERNAME/engineering-g
 your-project/
 ├── .github/
 │   ├── copilot-instructions.md    # Project-agnostic governance rules
-│   └── governance/
-│       ├── README.md              # System overview
-│       ├── INSTALLATION.md        # Setup guide
-│       │
-│       ├── constitution/          # Core reasoning principles
+│   ├── governance/                # Core governance framework
+│   │   ├── README.md              # System overview
+│   │   ├── INSTALLATION.md        # Setup guide
+│   │   ├── constitution/          # Core reasoning principles (6 files)
+│   │   ├── templates/             # Standard formats (4 files)
+│   │   ├── examples/              # Real-world applications (3 files)
+│   │   └── metrics/               # Quality tracking (3 files)
+│   │
+│   ├── agents/                    # Specialized AI agent modes
+│   │   ├── default.agent.md       # Default agent with governance
+│   │   ├── prp-analyst.agent.md   # Read-only pattern analyst
+│   │   └── prp-executor.agent.md  # Task executor with validation
+│   │
+│   ├── prompts/                   # Domain-specific prompts
+│   │   ├── api.prompt.md          # API development guidance
+│   │   ├── typescript.prompt.md   # TypeScript best practices
+│   │   ├── sdk.prompt.md          # SDK development patterns
+│   │   ├── prp-*.prompt.md        # Planning-Review patterns
+│   │   └── reporting.prompt.md    # Documentation standards
+│   │
+│   └── workflows/                 # GitHub Actions workflows
+│       ├── README.md              # Workflow documentation
+│       └── ci.yml                # Continuous integration
+│
+└── .ai/
+    └── README.md                  # AI integration guide
 │       │   ├── core-principles.md
 │       │   ├── decision-cost-filter.md
 │       │   ├── evidence-ladder.md
@@ -232,16 +253,89 @@ Drift patterns:
 
 ---
 
+## Specialized Agents
+
+The framework includes specialized AI agent modes for different tasks:
+
+### Available Agents
+
+**1. Default Agent** (`.github/agents/default.agent.md`)
+- Standard governance-aware agent
+- Applies methodology automatically
+- Tracks calibration
+- Best for: General development tasks
+
+**2. PRP Analyst** (`.github/agents/prp-analyst.agent.md`)
+- **Read-only** codebase pattern analyst
+- Finds conventions and patterns
+- Never edits files
+- Best for: Research, documentation, reviews
+
+**3. PRP Executor** (`.github/agents/prp-executor.agent.md`)
+- Implements planned tasks
+- Runs tests as validation gates
+- Follows pre-planned instructions
+- Best for: Feature implementation, refactoring
+
+### Using Agents
+
+Agents are invoked through VS Code's agent mode or referenced in prompts:
+
+```bash
+# In VS Code
+# Select agent from dropdown or reference in instructions
+
+# Example: Use PRP Analyst for research
+# "@prp-analyst Analyze the authentication flow in this codebase"
+```
+
+---
+
+## Domain-Specific Prompts
+
+Specialized prompts for different development domains:
+
+### Available Prompts
+
+**API Development** (`.github/prompts/api.prompt.md`)
+- RESTful API design patterns
+- Error handling standards
+- Request/response validation
+
+**TypeScript** (`.github/prompts/typescript.prompt.md`)
+- Type safety requirements
+- Functional programming patterns
+- Architecture boundaries
+
+**SDK Development** (`.github/prompts/sdk.prompt.md`)
+- SDK API design
+- Versioning strategies
+- Documentation standards
+
+**Planning-Review (PRP) Series**:
+- `prp-decide.prompt.md` - Decision-making patterns
+- `prp-execute.prompt.md` - Execution patterns
+- `prp-quick.prompt.md` - Quick analysis patterns
+- `prp-story-create.prompt.md` - Story creation
+- `prp-story-execute.prompt.md` - Story execution
+
+**Reporting** (`.github/prompts/reporting.prompt.md`)
+- Documentation standards
+- Report formatting
+- Metrics presentation
+
+### Using Prompts
+
+Prompts are automatically applied based on context or explicitly referenced:
+
+```markdown
+# In your instructions
+Use .github/prompts/typescript.prompt.md for all TypeScript changes
+```
+
+---
+
 ## Usage
-
-### For AI Agents (Claude, Copilot, etc.)
-
-1. Read `.github/governance/README.md`
-2. For each problem:
-   - Classify type (Arch/Debug/Config/Research)
-   - Apply methodology
-   - Use templates
-   - Track calibration
 
 ### For Human Engineers
 
